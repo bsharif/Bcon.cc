@@ -1,0 +1,102 @@
+﻿form .btn-toolbar {
+    margin-top: 20px !important;
+}
+.well-sm {
+    background-color: #fff;
+}
+.page-header a:hover {
+    text-decoration: none !important;
+    
+}
+.medigramBackground 
+{
+    margin-top: 100px;
+    background-position: center;
+    background-repeat: no-repeat;
+     display: inline-block;
+    height: 300px;
+    text-align: center;
+    width: 300px;
+}
+.medigramBackground img
+{
+    float: left;
+    position: absolute;
+}
+.medigramBackground .bg {
+    margin-top: -41px;
+    margin-left: -41px;
+}
+.page-header {
+    border: none !important;
+    padding-bottom: 1em;
+}
+.navbar-inner {
+    background-color: #fff !important;
+}
+.btn-danger {
+    background-color: #CB220B;
+}
+
+.color-red {
+    color: #CB220B;
+}
+.border-red 
+{
+    border: 1px solid #CB220B;
+}
+.btn-toolbar {
+text-align: center; 
+}
+label {
+    font-weight: bold;
+    font-size: 1em;
+}
+.required {
+    color: #CB220B;
+    padding: 4px;
+}
+.white-bakground {
+    background-color: #FFF;
+}
+.gray-border {
+    border: 1px solid #ddd;
+}
+.nav-tabs {
+    margin-bottom: 0px;
+    border-bottom: 0px solid #fff;
+}
+.tab-content {
+    border: 1px solid #ddd;
+}
+.headerLogo {
+    height: 100px !important;
+}
+.callButton 
+{
+    font-size: 30px;
+    font-weight: bold;
+    border-radius: 30px;
+    -moz-border-radius: 30px;
+    -webkit-border-radius: 30px;
+}
+.text-danger {
+     font-size: 1.2em;
+}
+.bconlink 
+{
+    margin-top: -60px;
+    margin-left: 165px;
+    font-weight: bold;
+    color: #000 !important;
+}
+.bconlink a
+{
+    color: #000 !important;
+    text-decoration: none;
+}
+.help-block {
+    background-color: #fff;
+    padding: .8em;
+    margin: 3px;
+}

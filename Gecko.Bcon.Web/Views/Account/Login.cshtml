@@ -1,0 +1,48 @@
+﻿@using Gecko.Bcon.Web.Models
+@using TwitterBootstrapMVC.Controls
+@model Gecko.Bcon.Web.Models.LoginModel
+
+@{
+    ViewBag.Title = "Log in";
+}
+    @if(ViewBag.Activated) {
+        <div class="alert alert-success">
+            You have activated your account. Log in below
+        </div>
+        <br />
+    }
+
+    @if (ViewBag.CheckEmail) {
+        <div class="alert alert-info">
+           Check your inbox for your account activation details. If an email from us does not arrive soon, check your SPAM folder as well.
+        </div>
+        <br/>
+    }
+<div class="well well-small">
+    <hgroup class="title">
+        <h1>@ViewBag.Title</h1>
+    </hgroup>
+
+
+    @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "form-horizontal well" })) {
+        
+        @Html.Bootstrap().ControlGroup().TextBoxFor(x => x.UserName).Label().LabelText("Email address").ShowRequiredStar(false)
+
+        @Html.Bootstrap().ControlGroup().PasswordFor(x => x.Password).Label().ShowRequiredStar(false)
+        
+        using (ToolBarBuilder<LoginModel> toolbar = Html.Bootstrap().Begin(new ToolBar())) {
+            using (ButtonGroupBuilder<LoginModel> group = toolbar.BeginButtonGroup(new ButtonGroup())) {
+            
+                @Html.Bootstrap().SubmitButton().Text("Log in").Style(ButtonStyle.Danger)
+                @Html.AntiForgeryToken()
+            }
+
+        }
+    }
+    @Html.Bootstrap().ActionLinkButton("Don't have an account? Register here!", "Register", "Account").RouteValues(new { Area = "" }).Style(ButtonStyle.Link)    
+    </div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

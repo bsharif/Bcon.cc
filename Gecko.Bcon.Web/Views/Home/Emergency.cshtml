@@ -1,0 +1,147 @@
+﻿@model Gecko.Bcon.Web.Models.EmergencyProfileViewModel
+
+@{
+    ViewBag.Title = "Emergency Details";
+    Layout = "~/Views/Shared/_BootstrapLayout.emergency.cshtml";
+}
+
+<script>
+    navigator.geolocation.getCurrentPosition(show_map);
+
+    function show_map(position) {
+        var latitude = position.coords.latitude;
+        var longitude = position.coords.longitude;
+        $("#geoLat").text(latitude);
+        $("#geoLon").text(longitude);
+        var p = new LatLon(latitude, longitude);
+        var ref = OsGridRef.latLongToOsGrid(p);
+        $("#osGridRef").text(ref.toString());
+        $("#maplink").attr("href", "http://maps.google.com/?q=" + latitude + "," + longitude).show(1000);
+    }
+
+</script>
+
+<div class="well span10 offset1" style="background-color: #fff; ">
+    <div class="row row-fluid text-info text-center">
+        <img src="/Images/Logo Vertical.png" alt="Logo"/>
+        <a class="btn btn-danger btn-large callButton" href="tel:999"><span class="">
+            <img src="/Images/Telephone%20icon.png" /></span>&nbsp; Call 999 Now</a>
+    </div>
+    <div class="well well-sm ">
+        
+        <h3>You will be asked for your location</h3>
+        <h3>Your location is: 
+            <br />
+            <span>
+                 Latitude:   <b id="geoLat" style="color: darkblue;"> N/A </b>
+            </span>
+            <br />
+            <span>
+                Longitude:  <b id="geoLon" style="color: darkblue;"> N/A</b>
+            </span>
+            <br/>
+            <span>
+                OS Grid Reference <b id="osGridRef" style="color: darkblue;"> N/A</b>
+            </span>
+            <br />
+        </h3>
+        <a id="maplink" style="display: none" href="" >
+            <b> <span class="silk-icon silk-icon-map-go"></span> View on map</b>
+        </a>
+      
+    </div>
+    <div class="well well-sm ">
+       
+        <h3>You have found <span style="color: darkblue; font-weight: bold">@Model.Name</span> 
+            @if (Model.DOB != null)
+            {
+                <span>who is  <span style="color: darkblue; font-weight: bold"> @Model.Age years </span> old (@Model.DOB.Value.ToShortDateString())
+                </span>
+            }
+        </h3>
+        
+    </div>
+    <div class="well well-sm ">
+        @if (Model.ShowUpdatedWarning) {
+            <span class="badge badge-warning">This data may not be up to date</span>
+        }
+        @if (!string.IsNullOrEmpty(Model.Conditions))
+        {
+            <div class="row row-fluid center-block">
+                <label class="span5 offset1 text-danger">They have the following medical conditions</label>
+                <span class="span4"><b style="color: darkblue;">@Model.Conditions </b>  </span>
+            </div>
+            <br />
+        }
+        @if (!string.IsNullOrEmpty(Model.Allergies))
+        {
+            <div class="row row-fluid center-block">
+                <label class="span5 offset1 text-danger" style=""> They have the following allergies</label>
+                <span class="span4"> <b style="color: darkblue;">@Model.Allergies</b> </span>
+            </div>
+            <br />
+        }
+    
+        @if (!string.IsNullOrEmpty(Model.Medication))
+        {
+            <div class="row row-fluid center-block">
+                <label class="span5 offset1 text-danger">They are taking the following medication</label>
+                <span class="span4 info"><b style="color: darkblue;">@Model.Medication </b>  </span>
+            </div>
+            <br />
+        }
+
+    </div>
+    
+    <div class="well well-sm " style="background-color: rgb(46, 46, 208); color: #fff">
+        <div  style="color: #fff;font-size:large;">Please show this information to
+            emergency services on arrival</div> 
+    </div>
+    <div class="well well-sm " style="background-color: rgb(46, 46, 208); color: #fff">
+        <div style="color: #fff; font-size:large;">Other useful information</div> 
+    </div>
+    <div class="well well-sm ">
+        <div class="row row-fluid center-block">
+            @if (!string.IsNullOrEmpty(Model.ProfileImage))
+            {
+                <img src="/UserContent/@Model.ProfileImage" class="offset1" alt="profile image"/>
+                <span> @Model.Name's picture</span>
+                <hr />
+            }
+        </div>
+        @if (!string.IsNullOrEmpty(Model.EmergencyContact + Model.EmergencyNumber))
+        {
+            <div class="row row-fluid center-block">
+                <label class="span5 offset1 "> Emergency Contact </label>
+                <span class="span4  "> @Model.EmergencyContact </span>
+            </div>
+            <div class="row row-fluid center-block">
+                <span class="offset6 span4"><a class="h4 text-info" href="tel:@Model.EmergencyNumber"><span class="silk-icon silk-icon-telephone-go"></span> @Model.EmergencyNumber </a> </span>
+            </div>
+            <hr />
+        }
+
+
+        @if (!string.IsNullOrEmpty(Model.NextOfKinName + Model.NextOfKinNumber))
+        {
+            <div class="row row-fluid center-block">
+                <label class="span5 offset1 "> Next of kin</label>
+                <span class="span4  "> @Model.NextOfKinName </span>
+            </div>
+            <div class="row row-fluid center-block">
+                <span class="span4 offset6"><a class="h4 text-info" href="tel:@Model.NextOfKinNumber"><span class="silk-icon silk-icon-telephone-go"></span> @Model.NextOfKinNumber </a> </span>
+            </div>
+            <hr />
+        }
+           @if (!string.IsNullOrEmpty(Model.NHSNumber))
+           {
+               <div class="row row-fluid center-block">
+                   <label class="span5 offset1 ">NHS Number</label>
+                   <span class="span4  "> @Model.NHSNumber </span>
+               </div>
+               <hr />
+           }
+
+    </div>
+
+</div>

@@ -1,0 +1,128 @@
+﻿@using Gecko.Bcon.Web.Models
+@using TwitterBootstrapMVC.Controls
+@model Gecko.Bcon.Web.Models.ProfileDetailViewModel
+@{
+    ViewBag.Title = "My Bcon Profile";
+}
+
+<ul class="breadcrumb">
+    <li>@Html.Bootstrap().ActionLink("Home", "Index", "Home")<span class="divider">|</span></li>
+    <li>
+        Profile Details
+    </li>
+</ul>
+
+<div class="well well-large ">
+    <div class="row row-fluid text-info text-center">
+        <h3>@Model.Name's Bcon Profile</h3>
+        @if (!string.IsNullOrEmpty(Model.ProfileImage))
+        {
+            <div>
+                <img src="/UserContent/@Model.ProfileImage"/>
+            </div>
+        }
+        
+    </div>
+    <div class="well">
+        @if (!string.IsNullOrEmpty(Model.EmergencyContact + Model.EmergencyNumber))
+        {
+            <div class="row row-fluid center-block">
+                <label class="span5 offset1 ">Emergency Contact Name </label>
+                <span class="span4 text-info "> @Model.EmergencyContact </span>
+            </div>
+
+            <div class="row row-fluid center-block">
+                <label class="span5 offset1 ">Telephone Number </label>
+                <span class="span4"><a class="h4 text-info" href="tel:@Model.EmergencyNumber"><span class="silk-icon silk-icon-telephone-go"></span> @Model.EmergencyNumber </a> </span>
+    
+            </div>
+        }
+        <hr />
+        @if (!string.IsNullOrEmpty(Model.NextOfKinName + Model.NextOfKinNumber))
+        {
+            <div class="row row-fluid center-block">
+                <label class="span5 offset1 ">Next of Kin Name</label>
+                <span class="span4 text-info "> @Model.NextOfKinName </span>
+            </div>
+
+            <div class="row row-fluid center-block">
+                <label class="span5 offset1 ">Telephone Number </label>
+                <span class="span4"><a class="h4 text-info" href="tel:@Model.NextOfKinNumber"><span class="silk-icon silk-icon-telephone-go"></span> @Model.NextOfKinNumber </a> </span>
+    
+            </div>
+        }
+        @if (!string.IsNullOrEmpty(Model.Allergies))
+        {
+            <div class="well well-sm ">
+                <div class="row row-fluid center-block">
+                    <label class="span5 offset1 text-danger"> Allergies</label>
+                    <span class="span4">
+                  
+                        <b>@Model.Allergies</b>
+                    </span>
+                </div>
+            </div>
+            <br />
+        }
+        @if (!string.IsNullOrEmpty(Model.Medication))
+        {
+            <div class="well well-sm ">
+                <div class="row row-fluid center-block">
+                    <label class="span5 offset1 text-danger"> Medication</label>
+                    <span class="span4 info"><b>@Model.Medication </b>  </span>
+                </div>
+            </div>
+            <br />
+        }
+    
+        @if (!string.IsNullOrEmpty(Model.Conditions))
+        {
+            <div class="well well-sm ">
+                <div class="row row-fluid center-block">
+                    <label class="span5 offset1 text-danger"> Medical Conditions</label>
+                    <span class="span4">
+                        <b>@Model.Conditions </b>      
+                    </span>
+                </div>
+
+            </div>
+        }
+        @if (!string.IsNullOrEmpty(Model.NHSNumber))
+        {
+            <div class="well well-sm ">
+                <div class="row row-fluid center-block">
+                    <label class="span5 offset1 ">NHS Number</label>
+                    <span class="span4  "> @Model.NHSNumber </span>
+                </div>
+            </div>
+        }
+
+        @if (Model.DOB.HasValue)
+        {
+            <div class="well well-sm ">
+                <div class="row row-fluid center-block">
+                    <label class="span5 offset1 ">Date of birth</label>
+                    <span class="span4  "> @Model.DOB.Value.ToShortDateString() </span>
+                </div>
+            </div>
+        }
+        @using (ToolBarBuilder<ProfileDetailViewModel> toolbar = Html.Bootstrap().Begin(new ToolBar()))
+        {
+            using (ButtonGroupBuilder<ProfileDetailViewModel> group = toolbar.BeginButtonGroup(new ButtonGroup()))
+            {
+                @Html.Bootstrap().ActionLinkButton("Update", "Update", "Profile").Style(ButtonStyle.Primary).Style(ButtonStyle.Danger)
+                @Html.Bootstrap().ActionLinkButton("Preview", "Index", "Emergency").RouteValues(new {id = Model.KeyCode})
+            }
+
+
+            <div class="pull-right">
+                @using (ButtonGroupBuilder<ProfileDetailViewModel> group = toolbar.BeginButtonGroup(new ButtonGroup()))
+                {
+                    @Html.Bootstrap().ActionLinkButton("Delete", "Delete").PrependIcon("silk-icon silk-icon-cancel")
+                }
+            </div>
+        }
+                
+    </div>
+
+</div>

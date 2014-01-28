@@ -1,0 +1,28 @@
+﻿@using Gecko.RFID.Web.Classes
+@model Gecko.Bcon.Web.Models.MyMediGramViewModel
+
+@{
+    ViewBag.Title = "My Bcon";
+}
+<ul class="breadcrumb hidden-print">
+    <li>@Html.Bootstrap().ActionLink("Home", "Index", "Home")<span class="divider"></span></li>
+    <li>
+       My Bcon
+    </li>
+</ul>
+
+<div class="center-block">
+    <div class="medigramBackground">
+        <img src="/Images/medigram-background.png" class="bg" style="float: left"/>
+        @Html.QRCode(Model.Url,200,1,QRCodeErrorCorrectionLevel.Medium)
+    </div>
+    <div class="bconlink"> <a href="@Model.Url">@Model.Url</a></div>
+</div>
+<div class="hidden-print">
+    <hr />
+    <a href="javascript:window.print()" class="btn btn-danger">Print</a>
+   <a href="#">Order Online</a> <span class="badge badge-info">available soon - we are currently sourcing printers </span> 
+</div>
+<div class="hidden-print hide">
+    @Model.Url
+</div>

@@ -1,0 +1,73 @@
+﻿@model Gecko.Bcon.Web.Models.MemberViewModel
+
+@{
+    ViewBag.Title = "Welcome ";
+}
+
+
+<section class="featured">
+    <div class="content-wrapper">
+        <hgroup class="title">
+            <h1>Medical details at the scan of a Bcon.</h1>
+        </hgroup>
+        <p>
+            With extreme sports becoming more popular, Bcon means important medical information can easily be presented to those first responders. 
+        </p>
+    </div>
+</section>
+<div class="well well-large">
+<h3>How it works:</h3>
+<ol >
+    <li >
+        <h3>Create your Bcon Profile</h3>
+        <p>
+            @if (Model.HasProfile) {
+                <span class="silk-icon silk-icon-accept"></span>
+                <span>
+                    You have created your profile.
+                    @Html.ActionLink("Details", "Details", "Profile") |
+                    @Html.ActionLink("Live preview", "Emergency", "Home", new{Id= Model.KeyCode}, new {traget="_blank"} )
+                </span>
+            } else {
+                <span>
+                    @Html.ActionLink("Create your Bcon Profile", "Consent", "Profile")
+                </span>
+            }
+        </p>
+    </li>
+
+    <li >
+        <h3>Generate you Bcon</h3>
+        <p>
+            @if (Model.HasProfile) {
+                <span>
+                    @Html.ActionLink("Print your Bcon", "MyBcon", "Account") 
+                </span>
+            } else {
+                <span class="disabled"> Once you have created your profile, get prints of your Bcon stickers</span>
+            }
+        </p>
+    </li>
+
+    <li >
+        <h3>Stick them on your safety equipment</h3>
+        <p>
+            Stick it on your bike helmet, motorbike helmet,  canoe helmet or hard hat!
+        </p>
+    </li>
+      <li >
+            <h3>Tell your friends about us</h3>
+            <p>
+                <a href="https://twitter.com/BconCC" class="twitter-follow-button" data-show-count="false">Follow @@BconCC</a>
+                <script>                    !function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https'; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = p + '://platform.twitter.com/widgets.js'; fjs.parentNode.insertBefore(js, fjs); } } (document, 'script', 'twitter-wjs');</script>
+                &nbsp;
+                <a href="https://twitter.com/share" class="twitter-share-button" data-text="Emergency information at the scan of a Bcon" data-via="BconCC">Tweet</a>
+                <script>                    !function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https'; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = p + '://platform.twitter.com/widgets.js'; fjs.parentNode.insertBefore(js, fjs); } } (document, 'script', 'twitter-wjs');</script>
+                &nbsp;
+                
+            </p>
+         <div class="share42init"></div>
+        <script type="text/javascript" src="/Content/share42/share42.js"></script> 
+        </li>
+</ol>
+</div>

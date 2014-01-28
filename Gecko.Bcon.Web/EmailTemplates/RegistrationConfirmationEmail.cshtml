@@ -1,0 +1,20 @@
+﻿@model Gecko.Bcon.Web.Classes.Emails.Models.RegistrationConfirmationEmailModel
+
+<body style="background-color: #222222; padding: 1em;">
+    <div  class="content" style="background-color: #f3f3f3; border: 1px solid #d3d3d3; border-radius: 4px 4px 4px 4px; box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05) inset; margin-bottom: 20px; min-height: 20px; padding: 1em;">
+        <p>Hi @Model.Name,</p>
+        <hr />
+        <div>
+            <p>Welcome to Bcon</p>
+            <p>Now <a href="@Model.ConfirmationLink">verify your account</a> by following the link 
+                <a href="@Model.ConfirmationLink">@Model.ConfirmationLink </a>. Once your account has 
+                been activated we can set up your personal Bcon.
+            </p>
+        </div>
+    </div>
+    <div class="footer" style="color: grey; font-size: small; padding: 5px" >
+        <p>
+            Copyright &copy;
+        </p>
+    </div>
+</body>

@@ -1,0 +1,31 @@
+﻿<ul class="nav ">
+    @if (Request.IsAuthenticated) {
+        <li>
+            @using (Html.BeginForm("LogOff", "Account", new { Area = "" }, FormMethod.Post, new { id="logoutForm" })) {
+                @Html.AntiForgeryToken()
+                <div class="btn-group">
+                    <a href="#" data-toggle="dropdown" class="btn btn-link">Welcome @User.Name</a>
+                    <a href="#" data-toggle="dropdown" class="btn btn-link dropdown-toggle"><span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        @if (User.IsInRole(Gecko.Bcon.Domain.User.Roles.Admin.ToString())) {
+                            <li>
+                                @Html.ActionLink("Administration", "Dashboard", "Home", new {Area = "Admin"}, null)
+                            </li>
+                            <li class="divider"></li>
+                        }
+                        <li>@Html.ActionLink("Home", "Index", "Home", new { Area = "" }, null)</li>
+                        <li>@Html.ActionLink("My Bcon", "Details", "Profile", new { Area = "" }, null)</li>
+                        <li>@Html.ActionLink("Print", "MyBcon", "Account", new { Area = "" }, null)</li>
+
+                        <li class="divider"></li>
+                        <li><a class="" href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+                    </ul>
+                </div>
+            }
+        </li>
+    } else {
+        @Html.Bootstrap().ActionLinkButton("Register", "Register", "Account").Style(ButtonStyle.Inverse)
+        <span class="divider"></span>
+        @Html.Bootstrap().ActionLinkButton("Log in", "Login", "Account").Style(ButtonStyle.Danger)
+    }
+</ul>

@@ -1,0 +1,54 @@
+﻿@model Gecko.Bcon.Web.Models.ConsentViewModel
+
+@using Gecko.Bcon.Web.Models
+@using TwitterBootstrapMVC.Controls
+
+@{
+    ViewBag.Title = "Consent";
+}
+
+<ul class="breadcrumb">
+    <li>@Html.Bootstrap().ActionLink("Home", "Index", "Home")<span class="divider"></span></li>
+    <li>
+        Profile
+    </li>
+</ul>
+
+<div class="well well-large span10 offset1">
+    <h2>            This application is to provide emergency information about yourself that can be relayed to the 
+
+            emergency services and health care providers by member of the public.</h2>
+
+    @using (Html.BeginForm("Consent", "Profile", FormMethod.Post,  new {@class = "form-horizontal"}))
+    {
+        <div>
+
+
+            <p>
+                By making this application you are consenting to the information that you provide to be 
+                accessed by the public when they scan or access either the QR code or URL. You are responsible for the 
+                information that you provide. You must keep this information up to date.
+            </p>
+            
+            <p>  We hold the data that you provide on a secure server and will only use your email address to inform you of any changes to the service. 
+            We will undertake all reasonable steps to protect your 
+          data on a secure server although this cannot be completely guaranteed and we will not be held 
+            negligent if there is a data breach. We will not sell, rent or provide any data to third parties.</p>
+          
+            <label for="chkConsent">
+                <input type="checkbox" name="consent" value="True" id="chkConsent" />
+                I consent to Bcon storing my data
+            </label>
+          
+
+        </div>
+        using (ToolBarBuilder<ConsentViewModel> toolbar = Html.Bootstrap().Begin(new ToolBar()))
+        {
+            using (ButtonGroupBuilder<ConsentViewModel> group = toolbar.BeginButtonGroup(new ButtonGroup()))
+            {
+                @Html.Bootstrap().SubmitButton().Text("Confirm").Style(ButtonStyle.Danger)
+                @Html.Bootstrap().ActionLinkButton("Cancel", "Index", "Home")
+            }
+        }
+    }
+</div>

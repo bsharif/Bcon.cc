@@ -1,0 +1,52 @@
+@using System.Web.Optimization
+@using BootstrapSupport
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>@ViewBag.Title  - Bcon Your Emergency Details</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="@Styles.Url("~/content/css")" rel="stylesheet"/>
+        @RenderSection("head", required: false)
+        @Html.Partial("_html5shiv")
+        @* favicons and touch icons go here *@
+        <link href="/Images/apple-touch-icon.png" rel="apple-touch-icon-precomposed apple-touch-icon" />
+        <link href="/Images/apple-touch-icon-76x76.png" rel="apple-touch-icon" sizes="76x76" />
+        <link href="/Images/apple-touch-icon-120x120.png" rel="apple-touch-icon" sizes="120x120" />
+        <link href="/Images/apple-touch-icon-152x152.png" rel="apple-touch-icon" sizes="152x152" />
+    </head>
+    <body>
+        <div class="navbar navbar-static-top page-header">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a href="/" title="Link home" style="line-height: 100px; height: 100px; display: inline-block">
+                        <img src="/Images/QR Logo.png" class="headerLogo" height="100px Important;"/> 
+                    </a>
+                    
+                    <div class="nav pull-right">
+                        @Html.Partial("_LoginPartial") 
+                    </div>
+                </div>
+            </div>
+        </div> 
+        <hr/>
+        <div class="container container-fluid">
+            @Html.Partial("_alerts")
+            @Html.Partial("_validationSummary")
+            @RenderBody()   
+        </div>
+        <hr class="clearfix" />
+        <div class="panel-footer">
+            
+            <p>
+                @Html.ActionLink("About","About","Home") | 
+                @Html.ActionLink("Contact","Contact","Home") | 
+                @Html.ActionLink("Credits", "Credits", "Home") | 
+                &copy; Bcon<span style="color: red; font-weight: bolder">+</span> @System.DateTime.Now.ToString("yyyy")
+            </p>
+        </div> 
+        @Scripts.Render("~/js")
+        @RenderSection("Scripts", required: false)
+    </body>
+</html>
+
