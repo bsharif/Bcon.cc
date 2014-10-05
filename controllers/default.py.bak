@@ -1,0 +1,141 @@
+# -*- coding: utf-8 -*-
+# this file is released under public domain and you can use without limitations
+
+#########################################################################
+## This is a sample controller
+## - index is the default action of any application
+## - user is required for authentication and authorization
+## - download is for downloading files uploaded in the db (does streaming)
+## - call exposes all registered services (none by default)
+#########################################################################
+
+#URLS###
+#http://hostname/app/default/index
+#http://hostname/app/default/logged_in  ..... links to:>
+                    #http://hostname/app/default/create_profile
+                    #http://hostname/app/default/edit_profile/<id>
+                    #http://hostname/app/default/view_profile/<id>
+                    #http://hostname/app/default/scan/<hash_key>
+                    #http://hostname/app/default/make_qr/<hash_key>
+
+import hashlib
+import qrcode
+
+# @auth.requires_login()
+def index():
+    logged_in = db.auth_user(auth.user_id)
+    if logged_in:
+        redirect(URL('logged_in'))
+    return locals()
+
+@auth.requires_login()
+def logged_in():
+    user = db.auth_user(auth.user_id)
+    profile = db(db.profile.created_by==user).select().first()
+    return locals()
+
+@auth.requires_login()
+def create_profile():
+    user = db.auth_user(auth.user_id)
+    has_profile = db(db.profile.created_by==user).select().first()
+#     if has_profile:
+#         session.flash = "You already have a profile. You can edit it below"
+#         redirect(URL('edit_profile'))
+#     else:
+    form = SQLFORM(db.profile)  #send user to view_profile/id of post
+    hash_key = make_hash(user.email)
+    form.vars.hash_key = hash_key
+    form.process()
+    redirect(URL('logged_in'))
+    return locals()
+
+@auth.requires_login()
+def edit_profile():
+    user = db.auth_user(auth.user_id)
+    record = db(db.profile.created_by==user).select().first()
+    form = SQLFORM(db.profile, record)
+    if form.process().accepted:
+       redirect(URL('view_profile'))
+    return locals()
+
+@auth.requires_login()
+def view_profile():
+    user = db.auth_user(auth.user_id)
+    post = db(db.profile.created_by==user).select().first()
+    return locals()
+
+@auth.requires_login()
+def create_qr():
+    size_arg = request.args(0)
+    user = db.auth_user(auth.user_id)
+    post = db(db.profile.created_by==user).select().first()
+    hash_key= post.hash_key
+    
+    if size_arg:
+        size = size_arg
+    else:
+        size="200"
+    
+    size_string = size+"x"+size
+    url_for_code = "https://ben55.pythonanywhere.com/bcon_clone/default/scan/"+hash_key
+    qr_source = "https://api.qrserver.com/v1/create-qr-code/?size="+size_string+"&data="+url_for_code
+
+    return locals()
+
+def scan():
+    hash_key = request.args(0)
+    post = db(db.profile.hash_key==hash_key).select().first()
+    return locals()
+    
+def user():
+    """
+    exposes:
+    http://..../[app]/default/user/login
+    http://..../[app]/default/user/logout
+    http://..../[app]/default/user/register
+    http://..../[app]/default/user/profile
+    http://..../[app]/default/user/retrieve_password
+    http://..../[app]/default/user/change_password
+    http://..../[app]/default/user/manage_users (requires membership in
+    use @auth.requires_login()
+        @auth.requires_membership('group name')
+        @auth.requires_permission('read','table name',record_id)
+    to decorate functions that need access control
+    """
+    return dict(form=auth())
+
+@cache.action()
+def download():
+    """
+    allows downloading of uploaded files
+    http://..../[app]/default/download/[filename]
+    """
+    return response.download(request, db)
+
+
+def call():
+    """
+    exposes services. for example:
+    http://..../[app]/default/call/jsonrpc
+    decorate with @services.jsonrpc the functions to expose
+    supports xml, json, xmlrpc, jsonrpc, amfrpc, rss, csv
+    """
+    return service()
+
+
+@auth.requires_signature()
+def data():
+    """
+    http://..../[app]/default/data/tables
+    http://..../[app]/default/data/create/[table]
+    http://..../[app]/default/data/read/[table]/[id]
+    http://..../[app]/default/data/update/[table]/[id]
+    http://..../[app]/default/data/delete/[table]/[id]
+    http://..../[app]/default/data/select/[table]
+    http://..../[app]/default/data/search/[table]
+    but URLs must be signed, i.e. linked with
+      A('table',_href=URL('data/tables',user_signature=True))
+    or with the signed load operator
+      LOAD('default','data.load',args='tables',ajax=True,user_signature=True)
+    """
+    return dict(form=crud())

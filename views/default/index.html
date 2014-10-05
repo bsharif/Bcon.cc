@@ -1,0 +1,55 @@
+{{extend 'layout.html'}}
+
+<p style="font-size:150%">
+    Welcome to Bcon-Clone. A clone of {{=A('bcon.cc',_href='http://bcon.cc')}} built with <strong>web2py</strong>.
+    
+</p><br/>
+
+<p style="font-size:125%" class="well">
+    Bcon stickers are QR codes that fit onto your extreme sports equipment. They contain information to help first responders act quickly and effectively, should they discover you in an accident.
+
+
+</p><br/>
+<h3>
+    How it works:
+</h3>
+<div class="well">
+<h4>
+    Step 1
+</h4>
+    <p>
+        Create or edit your profile.
+    </p>
+
+</div>
+
+<div class="well">
+<h4>
+    Step 2
+</h4>
+    <p>
+        View your profile to make sure you are happy with it.
+    </p>
+</div>
+
+
+<div class="well">
+<h4>
+    Step 3
+</h4>
+    <p>
+        Generate your QR code and print it out.
+    </p>
+</div>
+
+
+<div class="well">
+<h4>
+    Step 4
+</h4>
+    <p>
+        Stick the QR code to your equipment so that it is visible and can be scanned in an emergency. 
+    </p>
+</div>
+
+{{=A('Get Started',_style="width:20%;padding:10px;margin-right:30px",_class='btn btn-primary',_href=URL('logged_in'))}}

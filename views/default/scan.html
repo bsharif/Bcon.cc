@@ -1,0 +1,64 @@
+{{extend 'layout.html'}}
+<div class ="well">
+<h3>
+    Your location:
+</h3>    
+    
+    <p style="font-size:150%" id="grid_ref"></p>
+    <a style="font-size:150%" id="gps"></a>
+
+<button id="gps_button" onclick="getLocation()">Get location</button>
+
+<script>
+var x = document.getElementById("gps");
+var y = document.getElementById("grid_ref");
+var z = document.getElementById("gps_button");
+function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+    } else { 
+        x.innerHTML = "Geolocation is not supported by this browser.";
+    }
+}
+
+function showPosition(position) {
+    var coords = "http://maps.google.com/?q=" + position.coords.latitude + "," + position.coords.longitude;
+    x.setAttribute("href",coords);
+    x.innerHTML = "Click for map";
+    y.innerHTML = "Latitude : " + + position.coords.latitude + "<br />Longitude : " + position.coords.longitude;
+    z.setAttribute("style","visibility:hidden")
+}
+</script>
+</div>
+
+<h3>
+    You have found....
+</h3>
+<div class="well">
+<h3>Basic Details</h3>
+<p style="font-size:125%">
+    First name: {{=post.first_name}}<br/><br/>
+    Last name: {{=post.last_name}}<br/><br/>
+    Date of Birth: {{=post.date_of_birth}}<br/><br/>
+</p>
+<img width="200px" src="{{=URL('download', args=post.profile_picture)}}">
+</div>
+
+<div class="well">
+<h3>Emergency Contact Details</h3>
+<p style="font-size:125%">
+    Contact Name: {{=post.emergency_contact_name}}<br/><br/>
+    Contact Number: {{=post.emergency_contact_number}}<br/><br/>
+</p>
+</div>
+
+<div class="well">
+<h3>Medical Details</h3>
+<p style="font-size:125%">
+    NHS Number: {{=post.nhs_number}}<br/><br/>
+    Allergies: {{=post.allergies}}<br/><br/>
+    Medication: {{=post.medication}}<br/><br/>
+    Medical conditions: {{=post.medical_conditions}}<br/><br/>
+
+</p>
+</div>
